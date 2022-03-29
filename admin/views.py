@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .serializers import AddCategorySerializer, CategorySerializer
 from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from .models import Categories
 
 # Create your views here.
@@ -12,6 +13,8 @@ from .models import Categories
 
 class AddCategory(APIView):
     serializer_class = AddCategorySerializer
+    permission_classes = [IsAuthenticated]
+
 
     def post(self, request, format=None):
         try:

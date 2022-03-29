@@ -1,7 +1,7 @@
 from unicodedata import name
 from django.urls import path
 from user.models import ReviewRating
-from user.views import AddJob, AppliedWorkersView, ApprovedWorkersView, ConfirmJob, Dashboard, JobItem, JobView, MarkAsCompleted, RemoveWorkerFromJob, SearchWorker, SingleWorkerView, UpdateProfileView, ViewReviewRating, WorkerReviewsView, WorkerView, SearchJobs, ReviewRatings
+from user.views import AddJob, AppliedWorkersView, ApprovedWorkersView, ConfirmJob, Dashboard, JobItem, JobView, MarkAsCompleted, OverallRating, RemoveWorkerFromJob, SearchWorker, SingleWorkerView, UpdateProfileView, ViewReviewRating, WorkerReviewsView, WorkerView, SearchJobs, ReviewRatings
 
 urlpatterns = [
     path('dashboard/', Dashboard.as_view(), name='dashboard'),
@@ -23,6 +23,7 @@ urlpatterns = [
     path('review/<int:id>/',ReviewRatings.as_view(),name='review'),
     path('view_review/<int:id>/',ViewReviewRating.as_view(),name='view_review_rating'),
     path('worker_review_view/<int:id>/',WorkerReviewsView.as_view(),name='worker_review_view'),
+    path('overall_rating/<int:id>/',OverallRating.as_view(),name='overall_rating'),
 
 
 ]

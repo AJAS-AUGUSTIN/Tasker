@@ -296,8 +296,7 @@ class ReviewRatings(APIView):
                 print("44444444444444")
                 return Response({'msg': 'No Permission'})
         except:
-            return Response({'msg':"Error"})
-
+            return Response({'msg': "Error"})
 
 
 class ViewReviewRating(APIView):
@@ -331,10 +330,9 @@ class ViewReviewRating(APIView):
                     serialized_data = serializer.data
                 return Response(serialized_data, status=status.HTTP_200_OK)
             else:
-                    return Response({'msg': 'No Permission'})
+                return Response({'msg': 'No Permission'})
         except:
             return Response({"msg": "Error in editing"})
-
 
     def delete(self, request, id, format=None):
         try:
@@ -342,7 +340,7 @@ class ViewReviewRating(APIView):
             if job.user == request.user:
                 data = ReviewRating.objects.get(job=job)
                 data.delete()
-                return Response({'msg':"Deleted"}, status=status.HTTP_200_OK)
+                return Response({'msg': "Deleted"}, status=status.HTTP_200_OK)
             else:
                 return Response({'msg': 'No Permission'})
         except:
@@ -358,4 +356,37 @@ class WorkerReviewsView(APIView):
             serialized_data = serializer.data
             return Response(serialized_data, status=status.HTTP_200_OK)
         except:
-            return Response({'msg':"No Reviews"})
+            return Response({'msg': "No Reviews"})
+
+
+class OverallRating(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, id, format=None):
+        count1 = 0
+        count2 = 0
+        count3 = 0
+        count4 = 0
+        count5 = 0
+        try:
+            data = ReviewRating.objects.filter(worker=id)
+            for i in data:
+                print(i.rating)
+                if i.rating == 5:
+                    print("Kerii")
+                    count5 += 1
+                    print(count5)
+                elif i.rating == 4:
+                    count4 += 1
+                elif i.rating == 3:
+                    count3 += 1
+                elif i.rating == 2:
+                    count2 += 1
+                elif i.rating == 1:
+                    count1 += 1
+                average = ((5*count5)+(4*count4)+(3*count3)+(2*count2) +
+                           (1*count1))/(count5+count4+count3+count2+count1)
+                print("Average", average)
+                return Response({'average_rating': average}, status=status.HTTP_200_OK)
+        except:
+            return Response({'Rating': "No Rating"})
