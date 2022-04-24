@@ -10,10 +10,12 @@ urlpatterns = [
     path('admin/', include('admin.urls')),
     path('user/', include('user.urls')),
     path('worker/', include('worker.urls')),
-    path('openapi', get_schema_view(
+    path('chat/', include('chat.urls')),
+    path('openapi-schema', get_schema_view(
         title="Tasker",
         description="The destination of job givers and seekers...",
-        version="1.0.0"
+        version="1.0.0",
+        public=True
     ), name='openapi-schema'),
 
     path('', TemplateView.as_view(
